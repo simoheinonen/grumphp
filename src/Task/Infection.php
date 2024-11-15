@@ -34,6 +34,8 @@ class Infection extends AbstractExternalTask
             'mutators' => [],
             'ignore_patterns' => [],
             'triggered_by' => ['php'],
+            'skip_initial_tests' => false,
+            'coverage' => null,
         ]);
 
         $resolver->addAllowedTypes('threads', ['null', 'int']);
@@ -47,6 +49,8 @@ class Infection extends AbstractExternalTask
         $resolver->addAllowedTypes('mutators', ['array']);
         $resolver->addAllowedTypes('ignore_patterns', ['array']);
         $resolver->addAllowedTypes('triggered_by', ['array']);
+        $resolver->addAllowedTypes('skip_initial_tests', ['bool']);
+        $resolver->addAllowedTypes('coverage', ['null', 'string']);
 
         return ConfigOptionsResolver::fromOptionsResolver($resolver);
     }
@@ -84,6 +88,8 @@ class Infection extends AbstractExternalTask
         $arguments->addOptionalArgument('--configuration=%s', $config['configuration']);
         $arguments->addOptionalArgument('--min-msi=%s', $config['min_msi']);
         $arguments->addOptionalArgument('--min-covered-msi=%s', $config['min_covered_msi']);
+        $arguments->addOptionalArgument('--coverage=%s', $config['coverage']);
+        $arguments->addOptionalArgument('--skip-initial-tests', $config['skip_initial_tests']);
         $arguments->addOptionalCommaSeparatedArgument('--mutators=%s', $config['mutators']);
 
         if ($context instanceof GitPreCommitContext) {
