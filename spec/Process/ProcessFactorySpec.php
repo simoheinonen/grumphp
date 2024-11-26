@@ -42,6 +42,17 @@ class ProcessFactorySpec extends ObjectBehavior
     {
         return [
             'beQuoted' => function ($subject, $string) {
+                if ('\\' === DIRECTORY_SEPARATOR) {
+                    if ($subject !== $string) {
+                        throw new FailureException(sprintf(
+                            'Expected %s, got %s.',
+                            $string,
+                            $subject
+                        ));
+                    }
+                    return true;
+                }
+
                 $regex = sprintf('{^([\'"])%s\1$}', preg_quote($string));
                 if (!preg_match($regex, $subject)) {
                     throw new FailureException(sprintf(

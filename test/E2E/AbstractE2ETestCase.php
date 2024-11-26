@@ -73,6 +73,8 @@ abstract class AbstractE2ETestCase extends TestCase
         $process = new Process(
             [
                 $this->executableFinder->find('git'),
+                '-c',
+                'protocol.file.allow=always',
                 'submodule',
                 'add',
                 '-f',
@@ -174,7 +176,7 @@ abstract class AbstractE2ETestCase extends TestCase
         $this->dumpFile($composerFile, json_encode($newSource,  $flags));
     }
 
-    protected function ensureHooksExist(string $gitPath = null, string $containsPattern = '{grumphp}')
+    protected function ensureHooksExist(?string $gitPath = null, string $containsPattern = '{grumphp}')
     {
         $gitPath = $gitPath ?: $this->rootDir;
         $hooks = ['pre-commit', 'commit-msg'];
@@ -346,7 +348,7 @@ abstract class AbstractE2ETestCase extends TestCase
         $this->runCommand('install composer', $process);
     }
 
-    protected function commitAll(string $gitPath = null)
+    protected function commitAll(?string $gitPath = null)
     {
         $gitPath = $gitPath ?: $this->rootDir;
         $git = $this->executableFinder->find('git');
@@ -362,7 +364,7 @@ abstract class AbstractE2ETestCase extends TestCase
      * --all: Tell the command to automatically stage files that have been modified and deleted,
      * but new files you have not told Git about are not affected.
      */
-    protected function commitModifiedAndDeleted(string $gitPath = null)
+    protected function commitModifiedAndDeleted(?string $gitPath = null)
     {
         $gitPath = $gitPath ?: $this->rootDir;
         $git = $this->executableFinder->find('git');
@@ -382,7 +384,7 @@ abstract class AbstractE2ETestCase extends TestCase
     {
         $projectPath = $this->relativeRootPath($projectPath);
         $process = new Process(
-            [$vendorPath.'/bin/grumphp', 'run', '-vvv'],
+            [$this->executableFinder->find('php'), $vendorPath.'/bin/grumphp', 'run', '-vvv'],
             $projectPath
         );
 
@@ -396,7 +398,7 @@ abstract class AbstractE2ETestCase extends TestCase
         $projectPath = $this->relativeRootPath($projectPath);
         $this->runCommand('grumphp run with config',
             new Process(
-                [$vendorPath.'/bin/grumphp', 'run', '-vvv', '--config='.$grumphpFile],
+                [$this->executableFinder->find('php'), $vendorPath.'/bin/grumphp', 'run', '-vvv', '--config='.$grumphpFile],
                 $projectPath
             )
         );
@@ -407,7 +409,7 @@ abstract class AbstractE2ETestCase extends TestCase
         $projectPath = $this->relativeRootPath($projectPath);
         $this->runCommand('grumphp info',
             new Process(
-                [$vendorPath.'/bin/grumphp'],
+                [$this->executableFinder->find('php'), $vendorPath.'/bin/grumphp'],
                 $projectPath
             )
         );
@@ -418,7 +420,7 @@ abstract class AbstractE2ETestCase extends TestCase
         $this->runCommand(
             'grumphp git:init',
             new Process(
-                [$vendorPath.'/bin/grumphp', 'git:init', '--config='.$grumphpFile],
+                [$this->executableFinder->find('php'), $vendorPath.'/bin/grumphp', 'git:init', '--config='.$grumphpFile],
                 $this->rootDir
             )
         );

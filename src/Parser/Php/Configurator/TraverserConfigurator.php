@@ -61,7 +61,7 @@ class TraverserConfigurator
     /**
      * @throws \GrumPHP\Exception\RuntimeException
      */
-    public function registerStandardEnabledVisitor(string $alias, array $visitorOptions = null): void
+    public function registerStandardEnabledVisitor(string $alias, ?array $visitorOptions = null): void
     {
         if (array_key_exists($alias, $this->standardEnabledVisitors)) {
             throw new RuntimeException(

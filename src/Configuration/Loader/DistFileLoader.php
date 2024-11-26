@@ -18,12 +18,12 @@ final class DistFileLoader implements LoaderInterface
         $this->loader = $loader;
     }
 
-    public function load(mixed $resource, string $type = null): mixed
+    public function load(mixed $resource, ?string $type = null): mixed
     {
         return $this->loader->load($resource, $type);
     }
 
-    public function supports(mixed $resource, string $type = null): bool
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;
