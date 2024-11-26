@@ -147,7 +147,7 @@ class ConfigureCommand extends Command
         ];
     }
 
-    protected function createQuestionString(string $question, string $default = null, string $separator = ':'): string
+    protected function createQuestionString(string $question, ?string $default = null, string $separator = ':'): string
     {
         return null !== $default ?
             sprintf('<fg=green>%s</fg=green> [<fg=yellow>%s</fg=yellow>]%s ', $question, $default, $separator) :

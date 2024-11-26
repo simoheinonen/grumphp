@@ -8,5 +8,5 @@ use GrumPHP\Event\Event;
 
 interface EventDispatcherInterface
 {
-    public function dispatch(Event $event, string $name = null): void;
+    public function dispatch(Event $event, ?string $name = null): void;
 }

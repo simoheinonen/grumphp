@@ -41,7 +41,7 @@ class ProcessBuilder
      */
     public function createArgumentsForCommand(
         string $command,
-        callable $pathManipulator = null
+        ?callable $pathManipulator = null
     ): ProcessArgumentsCollection {
         $executable = $this->externalCommandLocator->locate($command);
         $manipulatedExecutable = $pathManipulator ? $pathManipulator($executable) : $executable;

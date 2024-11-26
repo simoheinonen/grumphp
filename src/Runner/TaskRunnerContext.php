@@ -43,7 +43,7 @@ class TaskRunnerContext
      */
     public function __construct(
         ContextInterface $taskContext,
-        TestSuiteInterface $testSuite = null,
+        ?TestSuiteInterface $testSuite = null,
         array $taskNames = []
     ) {
         $this->taskContext = $taskContext;
