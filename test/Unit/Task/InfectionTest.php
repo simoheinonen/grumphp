@@ -36,6 +36,8 @@ class InfectionTest extends AbstractExternalTaskTestCase
                 'mutators' => [],
                 'ignore_patterns' => [],
                 'triggered_by' => ['php'],
+                'skip_initial_tests' => false,
+                'coverage' => null
             ]
         ];
     }
@@ -231,6 +233,30 @@ class InfectionTest extends AbstractExternalTaskTestCase
                 '--no-interaction',
                 '--ignore-msi-with-no-mutations',
                 '--filter=hello.php,hello2.php'
+            ]
+        ];
+        yield 'skip-initial-tests' => [
+            [
+                'skip_initial_tests' => true,
+            ],
+            $this->mockContext(RunContext::class, ['hello.php', 'hello2.php']),
+            'infection',
+            [
+                '--no-interaction',
+                '--ignore-msi-with-no-mutations',
+                '--skip-initial-tests'
+            ]
+        ];
+        yield 'coverage' => [
+            [
+                'coverage' => '/path/to/coverage',
+            ],
+            $this->mockContext(RunContext::class, ['hello.php', 'hello2.php']),
+            'infection',
+            [
+                '--no-interaction',
+                '--ignore-msi-with-no-mutations',
+                '--coverage=/path/to/coverage'
             ]
         ];
     }

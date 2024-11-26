@@ -28,6 +28,8 @@ grumphp:
             mutators: []
             ignore_patterns: []
             triggered_by: [php]
+            skip_initial_tests: false
+            coverage: ~
 ```
 
 **threads**
@@ -112,3 +114,16 @@ With this option you can skip files like tests. Leave this option blank to run a
 This option will specify which file extensions will trigger the infection task.
 By default, infection will be triggered by altering a php file. 
 You can overwrite this option to whatever file you want to use!
+
+**skip_initial_tests**
+
+*Default: false*
+
+Skip running the initial tests. If set to `true`, it is necessary to set `coverage` to the
+path where `coverage-xml` and `log-junit` is written by `phpunit` task.
+
+**coverage**
+
+*Default: ~*
+
+Path where `coverage-xml` and `log-junit` is written by `phpunit` task.
