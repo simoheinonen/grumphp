@@ -31,7 +31,7 @@ class GitRepositoryDirLocatorTest extends FilesystemTestCase
 
         $this->filesystem               = new Filesystem();
         $this->locator                  = new GitRepositoryDirLocator($this->filesystem);
-        $this->gitDir = $this->workspace . DIRECTORY_SEPARATOR . '.git';
+        $this->gitDir                   = $this->workspace . DIRECTORY_SEPARATOR . '.git';
     }
 
     /**
@@ -69,7 +69,11 @@ class GitRepositoryDirLocatorTest extends FilesystemTestCase
      */
     public function it_can_locate_git_dir_in_workspaces(): void
     {
-        $this->filesystem->dumpFile($this->gitDir, 'gitdir: /dev/null');
-        $this->assertEquals('/dev/null', $this->locator->locate($this->gitDir));
+        $ourWorktreeProject = $this->workspace.'/project1/';
+        $worktreeGitRoot = $this->gitDir.'/worktrees/worktree1/';
+        mkdir($worktreeGitRoot, 0777, true);
+        $this->filesystem->dumpFile($worktreeGitRoot.'/commondir', '../..');
+        $this->filesystem->dumpFile($ourWorktreeProject.'/.git', 'gitdir: '.$this->gitDir.'/worktrees/worktree1');
+        $this->assertEquals($this->gitDir, $this->locator->locate($this->gitDir));
     }
 }
