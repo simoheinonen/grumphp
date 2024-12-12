@@ -25,6 +25,7 @@ class SecurityCheckerComposerauditTest extends AbstractExternalTaskTestCase
         yield 'defaults' => [
             [],
             [
+                'abandoned' => null,
                 'format' => null,
                 'locked' => true,
                 'no_dev' => false,
@@ -145,6 +146,19 @@ class SecurityCheckerComposerauditTest extends AbstractExternalTaskTestCase
                 'audit',
                 '--locked',
                 '--no-dev',
+            ]
+        ];
+
+        yield 'abandoned' => [
+            [
+                'abandoned' => 'ignore',
+            ],
+            $this->mockContext(RunContext::class, ['composer.lock']),
+            'composer',
+            [
+                'audit',
+                '--abandoned=ignore',
+                '--locked',
             ]
         ];
 

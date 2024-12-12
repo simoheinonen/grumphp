@@ -22,6 +22,7 @@ class SecurityCheckerComposeraudit extends AbstractExternalTask
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
+            'abandoned' => null,
             'format' => null,
             'locked' => true,
             'no_dev' => false,
@@ -29,6 +30,7 @@ class SecurityCheckerComposeraudit extends AbstractExternalTask
             'working_dir' => null,
         ]);
 
+        $resolver->addAllowedTypes('abandoned', ['null', 'string']);
         $resolver->addAllowedTypes('format', ['null', 'string']);
         $resolver->addAllowedTypes('locked', ['bool']);
         $resolver->addAllowedTypes('no_dev', ['bool']);
@@ -55,6 +57,7 @@ class SecurityCheckerComposeraudit extends AbstractExternalTask
 
         $arguments = $this->processBuilder->createArgumentsForCommand('composer');
         $arguments->add('audit');
+        $arguments->addOptionalArgument('--abandoned=%s', $config['abandoned']);
         $arguments->addOptionalArgument('--format=%s', $config['format']);
         $arguments->addOptionalArgument('--locked', $config['locked']);
         $arguments->addOptionalArgument('--no-dev', $config['no_dev']);

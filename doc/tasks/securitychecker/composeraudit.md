@@ -11,12 +11,19 @@ The task lives under the `securitychecker_composeraudit` namespace and has the f
 grumphp:
     tasks:
         securitychecker_composeraudit:
+            abandoned: null
             format: null
             locked: true
             no_dev: false
             run_always: false
             working_dir: null
 ```
+
+**abandoned**
+
+*Default: null*
+
+You can choose the behavior on abandoned packages. The available options are `ignore`, `report` and `fail`. By default, grumphp will use the `fail` behavior.
 
 **format**
 
